@@ -66,3 +66,24 @@ flowchart LR
     D --> E
     E --> F
 
+flowchart TB
+    subgraph Notification Service
+        API[Ktor REST API]
+        Worker[Background Workers]
+        Formatter[Message Formatter]
+        Retry[Retry Engine]
+        Audit[Audit Logger]
+    end
+
+    Broker[Message Broker]
+    DB[(PostgreSQL)]
+    SMS[SMS Provider]
+
+    Broker --> Worker
+    Worker --> Formatter
+    Formatter --> SMS
+    Worker --> Retry
+    Worker --> Audit
+    Audit --> DB
+
+
